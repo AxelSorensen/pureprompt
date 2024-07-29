@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   css: ['~/global.css'],
-  devtools: { enabled: true },
+  // devtools: { enabled: true },
   components: [
     {
       path: '~/components',

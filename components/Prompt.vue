@@ -44,8 +44,8 @@
                         class="bg-neutral-800 h-20 w-full resize-none rounded-sm p-2 outline-none text-xs caret-white text-neutral-200"
                         type="text" v-model="variables[key]" placeholder="Value">
                 </textarea>
-                    <Icon name="heroicons:sparkles-16-solid"
-                        class="text-gray-500 absolute hover:text-purple-500 cursor-pointer right-2 bottom-4" />
+                    <!-- <Icon name="heroicons:sparkles-16-solid"
+                        class="text-gray-500 absolute hover:text-purple-500 cursor-pointer right-2 bottom-4" /> -->
 
                 </div>
 

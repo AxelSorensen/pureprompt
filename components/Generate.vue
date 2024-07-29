@@ -140,6 +140,22 @@ const num_cases = ref(1)
 const tokens_per_case = ref(100)
 const test_case_container = ref(null);
 const last_input = ref(null);
+const pending = ref({
+    generate_prompts: false
+})
+
+async function refine_prompt() {
+    pending.value.generate_prompts = true
+    test_case_description.value = await $fetch('/api/refine_prompt', {
+        method: 'POST',
+        body: {
+            "prompt": test_case_description.value,
+        }
+    })
+    pending.value.generate_prompts = true
+
+
+}
 
 function addRow() {
     const obj = {};
