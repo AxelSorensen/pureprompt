@@ -120,7 +120,7 @@ function exportEval() {
     let file = responses.value.map(response => {
         return response.data
     })
-    download(JSON.stringify(file), 'test_cases', 'application/json')
+    download(JSON.stringify(file), 'evals', 'application/json')
 }
 
 async function download(content, fileName, contentType) {

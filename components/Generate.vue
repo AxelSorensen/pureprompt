@@ -112,7 +112,12 @@
                 <button @click="importJSON"
                     class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Icon name="heroicons:document-arrow-up-16-solid" class="text-gray-500" />
-                    Import JSON
+                    Import
+                </button>
+                <button @click="exportTestCases"
+                    class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
+                    <Icon name="heroicons:arrow-down-tray-16-solid" class="text-gray-500" />
+                    Export
                 </button>
             </div>
             <button @click="deleteAllRows"
@@ -120,7 +125,7 @@
                 <Icon name="uil:trash" class="text-gray-500 group-hover:text-red-500" />Clear All
             </button>
         </div>
-
+        {{ test_cases }}
     </div>
 
 
@@ -157,6 +162,14 @@ async function refine_prompt() {
 
 }
 
+async function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], { type: contentType });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
 function addRow() {
     const obj = {};
     Object.keys(variables.value).forEach(item => {
@@ -166,7 +179,6 @@ function addRow() {
 
     nextTick(() => {
         test_case_container.value.scrollTop = test_case_container.value.scrollHeight
-        last_input.value.$focus()
     });
 }
 
@@ -199,6 +211,10 @@ function deleteAllRows() {
 
 function openGenerateModal() {
     modal_open.value = true
+}
+
+function exportTestCases() {
+    download(JSON.stringify(test_cases.value), 'test_cases', 'application/json')
 }
 
 async function generate_test_case() {
