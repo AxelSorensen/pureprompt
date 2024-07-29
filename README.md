@@ -9,7 +9,7 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 ## Tutorial
 
 Nothing beats a video tutorial to learn the ropes:
-[![PurePrompt Tutorial](https://img.youtube.com/vi/VWq67_OapX8/0.jpg)](https://www.youtube.com/watch?v=VWq67_OapX8)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VWq67_OapX8?si=G8uFWcN3fd5o5GJ5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 ## Highlights
