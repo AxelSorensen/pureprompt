@@ -6,6 +6,11 @@ PurePrompt is an advanced tool for optimizing AI prompt engineering through its 
 
 No need to install, just head over to https://pureprompt.vercel.app/ and get started!
 
+## Tutorial
+
+Nothing beats a video tutorial to learn the ropes:
+<video src="https://github.com/AxelSorensen/pureprompt/blob/master/images/PurePrompt%20Tutorial.mov" width="320" height="240" controls></video>
+
 ## Highlights
 - **Create and Refine Prompt Templates**: Set up prompt templates with placeholder variables for user content, enabling efficient experimentation and optimization of instructions.
 - **Automatic Variable Recognition**: Recognizes and highlights variables denoted by `{{variable}}` in the input text for easy management and iteration.
@@ -38,10 +43,6 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 
 - **User-Friendly for Newcomers**: Aims to make prompt engineering and testing accessible, even for those new to the field.
 - **User Experience Focus**: Browser-based tool with a user-friendly interface designed for both ease of use and developer efficiency.
-
-## Tutorial
-
-Nothing beats a video tutorial to learn the ropes: [embed]
 
 ## Reach out
 
