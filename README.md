@@ -9,8 +9,8 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 ## Tutorial
 
 Nothing beats a video tutorial to learn the ropes:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VWq67_OapX8?si=G8uFWcN3fd5o5GJ5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VWq67_OapX8?si=G8uFWcN3fd5o5GJ5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Highlights
 - **Create and Refine Prompt Templates**: Set up prompt templates with placeholder variables for user content, enabling efficient experimentation and optimization of instructions.
