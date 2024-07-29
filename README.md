@@ -8,7 +8,7 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 
 ## Tutorial
 
-Nothing beats a video tutorial to learn the ropes:
+Nothing beats a video tutorial to learn the ropes: https://www.youtube.com/watch?v=VWq67_OapX8&ab_channel=AxelSorensen
 
 [![YouTube](http://i.ytimg.com/vi/VWq67_OapX8/hqdefault.jpg)](https://www.youtube.com/watch?v=VWq67_OapX8)
 
