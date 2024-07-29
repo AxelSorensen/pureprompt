@@ -9,23 +9,27 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 ## Highlights
 - **Create and Refine Prompt Templates**: Set up prompt templates with placeholder variables for user content, enabling efficient experimentation and optimization of instructions.
 - **Automatic Variable Recognition**: Recognizes and highlights variables denoted by `{{variable}}` in the input text for easy management and iteration.
+
+- <img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/prompt_screen.png" width="300">
+
 - **Generate Diverse Test Cases**: Automatically produces a wide range of test cases based on the context of the prompt and user-defined instructions.
 - **Control Token Limits**: Adjusts the average number of tokens per test case for better management of test case size and complexity.
+  
+<img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/generate_test_case.png" width="300">
+
 - **Import Predefined Examples**: Allows easy import of predefined test cases to replicate or build upon existing examples.
-![prompt screen](https://github.com/AxelSorensen/pureprompt/blob/master/images/prompt_screen.png)
 - **Parallel Model Testing**: Runs test cases through selected AI models in parallel to quickly assess prompt robustness.
 
+<img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/test_cases.png" width="300">
+
 - **Rate Model Responses**: Provides a rating system (1-5 scale) for evaluating model responses to identify areas of strength and weakness.
-
-- **User Experience Focus**: Browser-based tool with a user-friendly interface designed for both ease of use and developer efficiency.
-
 - **AI Safety Enhancement**: Helps detect and address issues that could lead to harmful or biased responses, improving the ethical use of AI.
-
 - **Evaluation Augmentation**: Simplifies the process of generating and evaluating diverse test cases to spot model limitations or deceptive behaviors.
 
-- **Future Plans for Expansion**: Upcoming features include beta-testing, expanding model support, enhancing prompt customization, and exploring eval and benchmark augmentation.
+- <img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/evaluate robustness.png" width="300">
 
 - **User-Friendly for Newcomers**: Aims to make prompt engineering and testing accessible, even for those new to the field.
+- **User Experience Focus**: Browser-based tool with a user-friendly interface designed for both ease of use and developer efficiency.
 
 
 ## Tutorial
