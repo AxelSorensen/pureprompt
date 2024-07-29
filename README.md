@@ -23,18 +23,21 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 
 - **Import Predefined Examples**: Allows easy import of predefined test cases to replicate or build upon existing examples.
 - **Parallel Model Testing**: Runs test cases through selected AI models in parallel to quickly assess prompt robustness.
+  
 <p align="center">
 <img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/test_cases.png" width="600">
 </p>
+
 - **Rate Model Responses**: Provides a rating system (1-5 scale) for evaluating model responses to identify areas of strength and weakness.
 - **AI Safety Enhancement**: Helps detect and address issues that could lead to harmful or biased responses, improving the ethical use of AI.
 - **Evaluation Augmentation**: Simplifies the process of generating and evaluating diverse test cases to spot model limitations or deceptive behaviors.
+  
 <p align="center">
 <img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/evaluate robustness.png" width="600">
 </p>
+
 - **User-Friendly for Newcomers**: Aims to make prompt engineering and testing accessible, even for those new to the field.
 - **User Experience Focus**: Browser-based tool with a user-friendly interface designed for both ease of use and developer efficiency.
-
 
 ## Tutorial
 
