@@ -26,7 +26,7 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 - **AI Safety Enhancement**: Helps detect and address issues that could lead to harmful or biased responses, improving the ethical use of AI.
 - **Evaluation Augmentation**: Simplifies the process of generating and evaluating diverse test cases to spot model limitations or deceptive behaviors.
 
-- <img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/evaluate robustness.png" width="600">
+<img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/evaluate robustness.png" width="600">
 
 - **User-Friendly for Newcomers**: Aims to make prompt engineering and testing accessible, even for those new to the field.
 - **User Experience Focus**: Browser-based tool with a user-friendly interface designed for both ease of use and developer efficiency.
