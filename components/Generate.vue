@@ -6,11 +6,15 @@
             class="bg-neutral-900 w-1/2 h-1/2 max-w-[400px] min-h-[400px] flex flex-col justify-between rounded-md p-4">
             <div class="flex gap-4 flex-col">
                 <div class=" text-neutral-600 text-sm font-medium">DESCRIPTION</div>
-                <div class="relative">
-                    <textarea
-                        class="bg-neutral-800 h-20 w-full resize-none rounded-sm p-2 outline-none text-xs caret-white text-neutral-200"
-                        type="text" v-model="test_case_description" placeholder="Decribe the test cases">
+                <div class="bg-neutral-800 h-20 w-full p-2 rounded-sm relative">
+                    <p class="text-xs text-neutral-400 animate-pulse" v-if="pending.refine_prompt">Generating refined
+                        prompt...</p>
+                    <textarea v-else v-model="test_case_description"
+                        class="bg-transparent outline-none resize-none h-full text-xs w-full caret-white text-neutral-200"
+                        placeholder="Decribe the test cases">
+
                 </textarea>
+
 
                     <div @click="refine_prompt">
                         <Icon name="heroicons:sparkles-16-solid"
@@ -96,6 +100,12 @@
 
 
             </table>
+            <div v-if="pending.generate_prompts" class="p-4 flex gap-4 items-center justify-center">
+                <div class="w-2 h-2 bg-neutral-400 rounded-full animate-ping"></div>
+                <p class="text-xs  text-neutral-400 animate-pulse">
+                    Generating
+                    test cases...</p>
+            </div>
         </div>
 
         <div class="flex gap-2 justify-between">
@@ -125,7 +135,6 @@
                 <Icon name="uil:trash" class="text-gray-500 group-hover:text-red-500" />Clear All
             </button>
         </div>
-        {{ test_cases }}
     </div>
 
 
@@ -142,22 +151,23 @@ const test_case_description = ref('')
 const { variables } = toRefs(props)
 const test_cases = defineModel('test_cases')
 const num_cases = ref(1)
-const tokens_per_case = ref(100)
+const tokens_per_case = ref(10)
 const test_case_container = ref(null);
 const last_input = ref(null);
 const pending = ref({
-    generate_prompts: false
+    generate_prompts: false,
+    refine_prompt: false
 })
 
 async function refine_prompt() {
-    pending.value.generate_prompts = true
+    pending.value.refine_prompt = true
     test_case_description.value = await $fetch('/api/refine_prompt', {
         method: 'POST',
         body: {
             "prompt": test_case_description.value,
         }
     })
-    pending.value.generate_prompts = true
+    pending.value.refine_prompt = false
 
 
 }
@@ -218,7 +228,7 @@ function exportTestCases() {
 }
 
 async function generate_test_case() {
-
+    pending.value.generate_prompts = true
     modal_open.value = false
     let buffer = await $fetch('/api/generate_test_case', {
         method: 'POST',
@@ -233,6 +243,7 @@ async function generate_test_case() {
     Object.values(buffer['test_cases']).forEach(test_case => {
         test_cases.value.push(test_case)
     })
+    pending.value.generate_prompts = false
 
     nextTick(() => {
         test_case_container.value.scrollTop = test_case_container.value.scrollHeight
