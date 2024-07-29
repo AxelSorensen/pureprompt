@@ -9,14 +9,18 @@ No need to install, just head over to https://pureprompt.vercel.app/ and get sta
 ## Highlights
 - **Create and Refine Prompt Templates**: Set up prompt templates with placeholder variables for user content, enabling efficient experimentation and optimization of instructions.
 - **Automatic Variable Recognition**: Recognizes and highlights variables denoted by `{{variable}}` in the input text for easy management and iteration.
+  
 <p align="center">
 <img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/prompt_screen.png" width="600">
 </p>
+
 - **Generate Diverse Test Cases**: Automatically produces a wide range of test cases based on the context of the prompt and user-defined instructions.
 - **Control Token Limits**: Adjusts the average number of tokens per test case for better management of test case size and complexity.
+  
 <p align="center">
 <img src="https://github.com/AxelSorensen/pureprompt/blob/master/images/generate_test_case.png" width="600">
 </p>
+
 - **Import Predefined Examples**: Allows easy import of predefined test cases to replicate or build upon existing examples.
 - **Parallel Model Testing**: Runs test cases through selected AI models in parallel to quickly assess prompt robustness.
 <p align="center">
