@@ -1,0 +1,22 @@
+// watch(
+//     () => variables.value,
+//     (newValue, oldValue) => {
+//         console.log(newValue)
+//         Object.keys(newValue).forEach(variable => {
+//             if (!(Object.keys(test_cases.value?.[0] || {}).includes(variable))) {
+//                 console.log(variable)
+//                 test_cases.value = test_cases.value.map((item, index) => ({
+//                     ...item,
+//                     variable: ''
+//                 }));
+//             }
+//         })
+//         Object.keys(test_cases.value?.[0] || {}).forEach(variable => {
+//             if (!(Object.keys(newValue).includes(variable))) {
+//                 console.log(variable)
+//                 delete variables.value['{{dwa}}']
+//             }
+//         })
+//     },
+//     { deep: true }
+// );
