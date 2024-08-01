@@ -1,25 +1,29 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-function setup(body) {
+
+
+
+export default defineEventHandler(async (event) => {
+    // const api_key = getCookie(event, 'api_key')
+    // const model = getCookie(event, 'model')
+    const body = await readBody(event)
     const chatModel = new ChatOpenAI({
-        model: 'gpt-4o-mini'
+        apiKey: body.api_key,
+        model: body.model,
     });
 
     const prompt = ChatPromptTemplate.fromMessages([
-        ["user", body.prompt],
+        ["user", '{prompt}'],
     ]);
 
     const outputParser = new StringOutputParser();
 
     const llmChain = prompt.pipe(chatModel).pipe(outputParser);
 
-    return llmChain
-}
 
-export default defineEventHandler(async (event) => {
-    const body = await readBody(event)
-    const llmChain = setup(body)
-    return await llmChain.invoke()
+    return await llmChain.invoke({
+        prompt: body.prompt
+    })
 
 })

@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="modal_open" @click.self="modal_open = false"
+    <div v-if="modal_open.generate" @click.self="modal_open.generate = false"
         class="fixed z-30 w-screen h-screen  bg-black bg-opacity-70 flex justify-center items-center">
         <div
             class="bg-neutral-900 w-1/2 h-1/2 max-w-[400px] min-h-[400px] flex flex-col justify-between rounded-md p-4">
@@ -220,7 +220,7 @@ function deleteAllRows() {
 }
 
 function openGenerateModal() {
-    modal_open.value = true
+    modal_open.value.generate = true
 }
 
 function exportTestCases() {
@@ -229,7 +229,7 @@ function exportTestCases() {
 
 async function generate_test_case() {
     pending.value.generate_prompts = true
-    modal_open.value = false
+    modal_open.value.generate = false
     let buffer = await $fetch('/api/generate_test_case', {
         method: 'POST',
         body: {

@@ -5,6 +5,7 @@
 
             <div class="flex flex-col gap-2">
                 <div class=" text-neutral-600 text-sm font-medium">SYSTEM PROMPT</div>
+
                 <div class="bg-neutral-800 h-40 w-full p-2 rounded-sm relative">
                     <p class="text-xs text-neutral-400 animate-pulse" v-if="pending.system_prompt">Generating refined
                         prompt...</p>
@@ -62,6 +63,10 @@
 </template>
 
 <script setup>
+
+const cookies = useCookie('api_key')
+const model = useModelType()
+const api_key = useApiKey()
 const variables = defineModel('variables')
 const prompt = defineModel('prompt')
 const response = ref('')
@@ -110,6 +115,8 @@ async function refine_prompt() {
         method: 'POST',
         body: {
             "prompt": prompt.value,
+            "model": model.value,
+            "api_key": api_key.value,
         }
     })
     pending.value.system_prompt = false
@@ -128,6 +135,8 @@ async function get_response() {
         method: 'POST',
         body: {
             "prompt": replaced_prompt,
+            "model": model.value,
+            "api_key": api_key.value,
         }
     })
     pending.value.model_response = false
