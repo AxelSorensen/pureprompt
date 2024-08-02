@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="modal_open.generate" @click.self="modal_open.generate = false"
+    <div v-if="modal_open.generate" @mousedown.self="modal_open.generate = false"
         class="fixed z-30 w-screen h-screen  bg-black bg-opacity-70 flex justify-center items-center">
         <div
             class="bg-neutral-900 w-1/2 h-1/2 max-w-[400px] min-h-[400px] flex flex-col justify-between rounded-md p-4">
@@ -43,9 +43,21 @@
 
                 </div>
                 <div class="flex justify-between items-center">
-                    <div class=" text-neutral-600  text-xs font-medium">USE EXAMPLES</div>
 
-                    <input class=" size-6 resize-none bg-opacity-20 rounded-sm text-xs accent-purple-800"
+                    <div class="flex">
+
+                        <div class="pr-4 text-neutral-600  text-xs font-medium">USE EXAMPLES</div>
+
+                    </div>
+                    <div v-if="!test_cases.length" class="flex gap-2">
+                        <Exclamation class="text-yellow-600 size-4 right-2 bottom-4" />
+
+
+                        <div class=" text-yellow-600  text-xs font-medium" v-if="!test_cases.length">Add examples
+                        </div>
+                    </div>
+                    <input v-else v-model="use_examples"
+                        class=" size-6 resize-none bg-opacity-20 rounded-sm text-xs accent-purple-800"
                         type="checkbox" />
 
 
@@ -91,7 +103,7 @@
 
 
                 <tr v-for="(item, key) in test_cases" class="divide-x divide-y divide-neutral-700">
-                    <td class="text-neutral-400">{{ key }}</td>
+                    <td class="text-neutral-400 p-2">{{ key }}</td>
                     <td v-for="variable in Object.keys(item)"
                         class="p-2 text-left align-text-top text-xs text-neutral-200 max-w-20">
 
@@ -101,8 +113,8 @@
 
                     </td>
                     <td>
-                        <div @click="deleteRow(key)">
-                            <Icon name="uil:trash" size="16" class="text-gray-500 cursor-pointer hover:text-red-500" />
+                        <div class="flex justify-center p-2" @click="deleteRow(key)">
+                            <Trash class="text-gray-500 cursor-pointer size-4 hover:text-red-500" />
                         </div>
                     </td>
                 </tr>
@@ -133,13 +145,14 @@
                     <Import class="text-gray-500 size-3" />
                     Import
                 </button>
-                <button @click="exportTestCases"
+                <button @click="exportTestCases" :class="{ 'opacity-20 pointer-events-none': !test_cases.length }"
                     class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Export class="text-gray-500 size-3" />
                     Export
                 </button>
             </div>
-            <button @click="deleteAllRows"
+
+            <button @click="deleteAllRows" :class="{ 'opacity-20 pointer-events-none': !test_cases.length }"
                 class="bg-neutral-800 group flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                 <Trash class="text-gray-500 group-hover:text-red-500 size-3" />Clear All
             </button>
@@ -150,6 +163,7 @@
 </template>
 
 <script setup>
+import Exclamation from '~icons/heroicons/exclamation-circle-16-solid'
 import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
 import Sparkles from '~icons/heroicons/sparkles-16-solid'
 import Plus from '~icons/heroicons/plus-16-solid'
@@ -157,21 +171,25 @@ import Import from '~icons/heroicons/document-arrow-up-16-solid'
 import Export from '~icons/heroicons/arrow-down-tray-16-solid'
 import Trash from '~icons/uil/trash'
 const props = defineProps({
-    variables: Object
+    variables: Object,
+    isValidApiKey: Boolean
 })
+const { variables, isValidApiKey } = toRefs(props)
 const responses = defineModel('responses')
 const modal_open = defineModel('modal_open')
 const test_case_description = ref('')
-const { variables } = toRefs(props)
+const use_examples = ref(false)
+
 const test_cases = defineModel('test_cases')
 const num_cases = ref(1)
 const tokens_per_case = ref(10)
 const test_case_container = ref(null);
-const last_input = ref(null);
 const pending = ref({
     generate_prompts: false,
     refine_prompt: false
 })
+
+
 
 async function refine_prompt() {
     pending.value.refine_prompt = true
@@ -248,16 +266,19 @@ async function generate_test_case() {
         method: 'POST',
         body: {
             "description": test_case_description.value,
+            "variables": JSON.stringify(Object.keys(variables.value)),
+            "use_examples": use_examples.value,
             "examples": JSON.stringify(test_cases.value),
             "num_cases": num_cases.value,
             "tokens_per_case": tokens_per_case.value,
         }
     })
+    pending.value.generate_prompts = false
     buffer = JSON.parse(buffer)
     Object.values(buffer['test_cases']).forEach(test_case => {
         test_cases.value.push(test_case)
     })
-    pending.value.generate_prompts = false
+
 
     nextTick(() => {
         test_case_container.value.scrollTop = test_case_container.value.scrollHeight

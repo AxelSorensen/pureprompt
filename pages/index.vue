@@ -29,7 +29,6 @@
                         <option>gpt-4o-mini</option>
                         <option>gpt-4o</option>
                         <option>gpt-4-turbo</option>
-                        <option>gpt-4</option>
                         <option>gpt-3.5-turbo</option>
 
                     </select>
@@ -80,6 +79,8 @@ const api_key = useCookie('api_key')
 if (!api_key.value) {
     api_key.value = ''
 }
+
+
 const model = useCookie('model')
 if (!model.value) {
     model.value = 'gpt-4o-mini'

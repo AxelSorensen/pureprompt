@@ -25,6 +25,7 @@
                                 </div>
                             </div>
                         </th>
+                        <th class="w-10 text-neutral-400"></th>
 
                     </tr>
                 </thead>
@@ -64,6 +65,11 @@
                             </select>
                         </div>
                     </td>
+                    <td>
+                        <div class="flex justify-center p-2" @click="deleteRow(key)">
+                            <Trash class="text-gray-500 cursor-pointer size-4 hover:text-red-500" />
+                        </div>
+                    </td>
                 </tr>
 
 
@@ -72,18 +78,18 @@
 
         <div class="flex gap-2 justify-between">
             <div class="flex gap-2">
-                <button @click="runPrompts(true)"
+                <button @click="runPrompts(true)" :class="{ 'opacity-20 pointer-events-none': !test_cases.length }"
                     class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                     <Play name="heroicons:play-16-solid" class="text-gray-500" />Run All
                 </button>
-                <button @click="runPrompts(false)"
+                <button @click="runPrompts(false)" :class="{ 'opacity-20 pointer-events-none': !test_cases.length }"
                     class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                     <Refresh name="heroicons:arrow-path-16-solid" class="text-gray-500" />Run Remaining
                 </button>
 
 
             </div>
-            <button @click="exportEval"
+            <button @click="exportEval" :class="{ 'opacity-20 pointer-events-none': !test_cases.length }"
                 class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                 <Export name="heroicons:document-arrow-down-16-solid" class="text-gray-500" />Export Eval
             </button>
@@ -99,6 +105,7 @@
 import Refresh from '~icons/heroicons/arrow-path-16-solid'
 import Export from '~icons/heroicons/arrow-down-tray-16-solid'
 import Play from '~icons/heroicons/play-16-solid'
+import Trash from '~icons/uil/trash'
 
 const props = defineProps({
     variables: Object,
