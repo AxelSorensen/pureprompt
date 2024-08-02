@@ -39,8 +39,7 @@
 
                 </div>
                 <div class="flex items-center gap-2">
-                    <Icon name="heroicons:exclamation-circle-16-solid"
-                        class="text-yellow-600 size-4 right-2 bottom-4" />
+                    <Exclamation class="text-yellow-600 size-4 right-2 bottom-4" />
                     <div class="text-xs text-yellow-600">Hugging Face support coming soon</div>
                 </div>
             </div>
@@ -74,6 +73,7 @@
 
 <script setup>
 import Check from '~icons/heroicons/check-16-solid'
+import Exclamation from '~icons/heroicons/exclamation-circle-16-solid'
 // const api_key = useApiKey()
 // const model = useModelType()
 const api_key = useCookie('api_key', { secure: true })
