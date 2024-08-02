@@ -74,18 +74,18 @@
             <div class="flex gap-2">
                 <button @click="runPrompts(true)"
                     class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                    <Icon name="heroicons:play-16-solid" class="text-gray-500" />Run All
+                    <Play name="heroicons:play-16-solid" class="text-gray-500" />Run All
                 </button>
                 <button @click="runPrompts(false)"
                     class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                    <Icon name="heroicons:arrow-path-16-solid" class="text-gray-500" />Run Remaining
+                    <Refresh name="heroicons:arrow-path-16-solid" class="text-gray-500" />Run Remaining
                 </button>
 
 
             </div>
             <button @click="exportEval"
                 class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                <Icon name="heroicons:document-arrow-down-16-solid" class="text-gray-500" />Export Eval
+                <Export name="heroicons:document-arrow-down-16-solid" class="text-gray-500" />Export Eval
             </button>
         </div>
 
@@ -96,6 +96,9 @@
 </template>
 
 <script setup>
+import Refresh from '~icons/heroicons/arrow-path-16-solid'
+import Export from '~icons/heroicons/arrow-down-tray-16-solid'
+import Play from '~icons/heroicons/play-16-solid'
 
 const props = defineProps({
     variables: Object,

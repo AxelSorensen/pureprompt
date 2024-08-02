@@ -15,13 +15,23 @@
 
                 </textarea>
                     <div @click="refine_prompt">
-                        <Icon name="heroicons:sparkles-16-solid"
-                            class="text-gray-500 absolute hover:text-purple-500 cursor-pointer right-2 bottom-4" />
+                        <Sparkles
+                            class="text-gray-500 absolute size-4 hover:text-purple-500 cursor-pointer right-2 bottom-4" />
                     </div>
                 </div>
             </div>
-            <button class="text-white bg-purple-800 rounded-sm hover:bg-purple-700 text-xs p-2"
+            <button v-if="isValidApiKey"
+                class="text-white justify-center flex bg-purple-800 rounded-sm hover:bg-purple-700 text-xs p-2"
                 @click="submit_prompt">SUBMIT</button>
+            <div @click="modal_open.settings = true"
+                class="flex gap-2 justify-center whitespace-nowrap rounded-lg px-3.5 py-2.5 text-sm font-medium text-purple-500 hover:bg-purple-900 hover:bg-opacity-40 cursor-pointer shadow border border-purple-500 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(-45deg,transparent_25%,#a855f740_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:animate-[slide_2s_ease-in-out_infinite]"
+                v-else>Add
+                API key in
+                Settings
+                <div class="flex items-center">
+                    <Cog class="text-purple-500 size-4" />
+                </div>
+            </div>
             <div class="flex flex-col gap-2">
                 <div class=" text-neutral-600 text-sm font-medium">TEMPLATE</div>
                 <div v-html="template_prompt"
@@ -37,7 +47,7 @@
                 <div class="flex gap-2 text-sm items-center justify-between">
                     <p class="text-purple-500">{{ key }}</p><button class="font-bold flex "
                         @click="deleteVariable(key)">
-                        <Icon name="uil:trash" class="text-gray-500 hover:text-red-500" />
+                        <Trash class="text-gray-500 size-4 hover:text-red-500" />
                     </button>
                 </div>
                 <div class="relative">
@@ -51,7 +61,9 @@
                 </div>
 
             </div>
-            <button class="text-white bg-purple-800 rounded-sm hover:bg-purple-700 text-xs p-2" @click="get_response">
+            <button v-if="isValidApiKey" class="text-white bg-purple-800 rounded-sm hover:bg-purple-700 text-xs p-2"
+                @click="get_response">
+
                 <div class="animate-pulse" v-if="pending.model_response">Generating...</div>
                 <div v-else>RUN PROMPT</div>
             </button>
@@ -63,10 +75,17 @@
 </template>
 
 <script setup>
+import Trash from '~icons/uil/trash'
+import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
+import Sparkles from '~icons/heroicons/sparkles-16-solid'
+const props = defineProps({
+    isValidApiKey: Boolean
+})
 
-const cookies = useCookie('api_key')
+const { isValidApiKey } = toRefs(props)
 const model = useModelType()
 const api_key = useApiKey()
+const modal_open = defineModel('modal_open')
 const variables = defineModel('variables')
 const prompt = defineModel('prompt')
 const response = ref('')
@@ -125,6 +144,7 @@ async function refine_prompt() {
 }
 
 async function get_response() {
+
     pending.value.model_response = true
     let replaced_prompt = prompt.value
     Object.keys(variables.value).forEach(variable => {
@@ -135,11 +155,20 @@ async function get_response() {
         method: 'POST',
         body: {
             "prompt": replaced_prompt,
-            "model": model.value,
-            "api_key": api_key.value,
         }
     })
     pending.value.model_response = false
 }
 
 </script>
+<style>
+@keyframes slide {
+    0% {
+        background-position: 200% 0, 0 0;
+    }
+
+    100% {
+        background-position: -100% 0, 0 0;
+    }
+}
+</style>

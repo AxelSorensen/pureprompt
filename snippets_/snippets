@@ -20,3 +20,16 @@
 //     },
 //     { deep: true }
 // );
+
+// class="text-purple-500 border-dashed hover:bg-purple-500 hover:bg-opacity-20 cursor-pointer border-purple-500 gap-2 justify-center border rounded-md text-xs p-2 flex items-center text-center"
+
+// The shine button
+// <div @click="modal_open.settings = true"
+// class="inline-flex justify-center whitespace-nowrap rounded-lg px-3.5 py-2.5 text-sm font-medium text-purple-500 shadow border border-dashed border-purple-500 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,#a855f740_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:animate-[slide_2s_ease-in-out_infinite]"
+// v-else>Add
+// API key in
+// Settings
+// <div class="flex">
+//     <Icon name="heroicons:cog-6-tooth-16-solid" size="20" class="text-purple-500" />
+// </div>
+// </div>

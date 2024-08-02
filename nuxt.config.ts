@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import Icons from 'unplugin-icons/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   css: ['~/global.css'],
   // devtools: { enabled: true },
-
   components: [
     {
       path: '~/components',
@@ -16,10 +16,17 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  vite: {
+    plugins: [
+      Icons({
+        // the feature below is experimental ⬇️
+        autoInstall: true
+      })
+    ]
+  },
 
   modules: [
-    '@nuxt/icon',
-    '@pinia/nuxt',
+
   ]
 
 })

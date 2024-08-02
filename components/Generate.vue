@@ -17,8 +17,8 @@
 
 
                     <div @click="refine_prompt">
-                        <Icon name="heroicons:sparkles-16-solid"
-                            class="text-gray-500 absolute hover:text-purple-500 cursor-pointer right-2 bottom-4" />
+                        <Sparkles
+                            class="text-gray-500 absolute hover:text-purple-500 cursor-pointer size-4 right-2 bottom-4" />
                     </div>
 
                 </div>
@@ -52,10 +52,19 @@
 
                 </div>
             </div>
-            <button class="text-white bg-purple-800 hover:bg-purple-700 rounded-sm text-xs p-2"
+            <button v-if="isValidApiKey" class="text-white bg-purple-800 hover:bg-purple-700 rounded-sm text-xs p-2"
                 @click="generate_test_case">GENERATE
                 TEST
                 CASES</button>
+            <div @click="modal_open.generate = false; modal_open.settings = true"
+                class="flex items-center gap-2 justify-center whitespace-nowrap rounded-lg p-2 text-sm font-medium text-purple-500 hover:bg-purple-900 hover:bg-opacity-40 cursor-pointer shadow border border-purple-500 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(-45deg,transparent_25%,#a855f740_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:animate-[slide_2s_ease-in-out_infinite]"
+                v-else>Add
+                API key in
+                Settings
+
+                <Cog class="text-purple-500 size-4" />
+
+            </div>
         </div>
 
 
@@ -112,27 +121,27 @@
             <div class="flex gap-2">
                 <button @click="addRow"
                     class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                    <Icon name="heroicons:plus-16-solid" class="text-gray-500" />Add Row
+                    <Play class="text-gray-500 size-3" />Add Row
                 </button>
                 <button @click="openGenerateModal"
                     class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
-                    <Icon name="heroicons:sparkles-16-solid" class="text-gray-500" />Generate
+                    <Sparkles class="text-gray-500 size-3" />Generate
                     Test Case
                 </button>
                 <button @click="importJSON"
                     class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
-                    <Icon name="heroicons:document-arrow-up-16-solid" class="text-gray-500" />
+                    <Import class="text-gray-500 size-3" />
                     Import
                 </button>
                 <button @click="exportTestCases"
                     class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
-                    <Icon name="heroicons:arrow-down-tray-16-solid" class="text-gray-500" />
+                    <Export class="text-gray-500 size-3" />
                     Export
                 </button>
             </div>
             <button @click="deleteAllRows"
                 class="bg-neutral-800 group flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                <Icon name="uil:trash" class="text-gray-500 group-hover:text-red-500" />Clear All
+                <Trash class="text-gray-500 group-hover:text-red-500 size-3" />Clear All
             </button>
         </div>
     </div>
@@ -141,7 +150,12 @@
 </template>
 
 <script setup>
-
+import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
+import Sparkles from '~icons/heroicons/sparkles-16-solid'
+import Play from '~icons/heroicons/play-16-solid'
+import Import from '~icons/heroicons/document-arrow-up-16-solid'
+import Export from '~icons/heroicons/arrow-down-tray-16-solid'
+import Trash from '~icons/uil/trash'
 const props = defineProps({
     variables: Object
 })
