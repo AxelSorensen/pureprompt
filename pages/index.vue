@@ -76,11 +76,11 @@ import Check from '~icons/heroicons/check-16-solid'
 import Exclamation from '~icons/heroicons/exclamation-circle-16-solid'
 // const api_key = useApiKey()
 // const model = useModelType()
-const api_key = useCookie('api_key', { secure: true })
+const api_key = useCookie('api_key')
 if (!api_key.value) {
     api_key.value = ''
 }
-const model = useCookie('model', { secure: true })
+const model = useCookie('model')
 if (!model.value) {
     model.value = 'gpt-4o-mini'
 }
