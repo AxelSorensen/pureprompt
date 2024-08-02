@@ -121,7 +121,7 @@
             <div class="flex gap-2">
                 <button @click="addRow"
                     class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                    <Play class="text-gray-500 size-3" />Add Row
+                    <Plus class="text-gray-500 size-3" />Add Row
                 </button>
                 <button @click="openGenerateModal"
                     class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
@@ -152,7 +152,7 @@
 <script setup>
 import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
 import Sparkles from '~icons/heroicons/sparkles-16-solid'
-import Play from '~icons/heroicons/play-16-solid'
+import Plus from '~icons/heroicons/plus-16-solid'
 import Import from '~icons/heroicons/document-arrow-up-16-solid'
 import Export from '~icons/heroicons/arrow-down-tray-16-solid'
 import Trash from '~icons/uil/trash'
