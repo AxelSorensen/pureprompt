@@ -16,7 +16,7 @@
                 </textarea>
 
 
-                    <div @click="refine_prompt">
+                    <div v-if="test_case_description" @click="refine_prompt">
                         <Sparkles
                             class="text-gray-500 absolute hover:text-purple-500 cursor-pointer size-4 right-2 bottom-4" />
                     </div>

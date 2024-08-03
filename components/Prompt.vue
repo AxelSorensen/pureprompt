@@ -14,9 +14,11 @@
                         placeholder="Instruction for the system">
 
                 </textarea>
-                    <div @click="refine_prompt">
-                        <Sparkles
-                            class="text-gray-500 absolute size-4 hover:text-purple-500 cursor-pointer right-2 bottom-4" />
+                    <div class="absolute flex items-center cursor-pointer group gap-2  right-2 bottom-4"
+                        @click="refine_prompt">
+                        <p class="text-xs text-gray-500 group-hover:text-purple-500">Generate
+                            example</p>
+                        <Sparkles class="text-gray-500 size-4 group-hover:text-purple-500 cursor-pointer" />
                     </div>
                 </div>
             </div>

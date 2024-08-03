@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="w-10 text-neutral-400"></th>
+
 
                     </tr>
                 </thead>
@@ -65,11 +65,7 @@
                             </select>
                         </div>
                     </td>
-                    <td>
-                        <div class="flex justify-center p-2" @click="deleteRow(key)">
-                            <Trash class="text-gray-500 cursor-pointer size-4 hover:text-red-500" />
-                        </div>
-                    </td>
+
                 </tr>
 
 
