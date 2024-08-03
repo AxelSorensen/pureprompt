@@ -145,14 +145,14 @@
                     <Import class="text-gray-500 size-3" />
                     Import
                 </button>
-                <button @click="exportTestCases" :class="{ 'opacity-20 pointer-events-none': !test_cases.length }"
+                <button @click="exportTestCases" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
                     class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Export class="text-gray-500 size-3" />
                     Export
                 </button>
             </div>
 
-            <button @click="deleteAllRows" :class="{ 'opacity-20 pointer-events-none': !test_cases.length }"
+            <button @click="deleteAllRows" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
                 class="bg-neutral-800 group flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                 <Trash class="text-gray-500 group-hover:text-red-500 size-3" />Clear All
             </button>
