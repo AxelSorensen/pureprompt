@@ -5,7 +5,7 @@
         <div
             class="bg-neutral-900 w-1/2 h-1/2 max-w-[400px] min-h-[400px] flex flex-col justify-between rounded-md p-4">
             <div class="flex gap-4 flex-col">
-                <div class=" text-neutral-600 text-sm font-medium">DESCRIPTION</div>
+                <div class=" text-neutral-600 text-sm  font-medium">DESCRIPTION</div>
                 <div class="bg-neutral-800 h-20 w-full p-2 rounded-sm relative">
                     <p class="text-xs text-neutral-400 animate-pulse" v-if="pending.refine_prompt">Generating refined
                         prompt...</p>
@@ -50,10 +50,10 @@
 
                     </div>
                     <div v-if="!test_cases.length" class="flex gap-2">
-                        <Exclamation class="text-yellow-600 size-4 right-2 bottom-4" />
+                        <Exclamation class="text-amber-500 size-4 right-2 bottom-4" />
 
 
-                        <div class=" text-yellow-600  text-xs font-medium" v-if="!test_cases.length">Add examples
+                        <div class=" text-amber-500  text-xs font-medium" v-if="!test_cases.length">Add examples
                         </div>
                     </div>
                     <input v-else v-model="use_examples"
@@ -163,12 +163,12 @@
 </template>
 
 <script setup>
-import Exclamation from '~icons/heroicons/exclamation-circle-16-solid'
-import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
-import Sparkles from '~icons/heroicons/sparkles-16-solid'
-import Plus from '~icons/heroicons/plus-16-solid'
-import Import from '~icons/heroicons/document-arrow-up-16-solid'
 import Export from '~icons/heroicons/arrow-down-tray-16-solid'
+import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
+import Import from '~icons/heroicons/document-arrow-up-16-solid'
+import Exclamation from '~icons/heroicons/exclamation-circle-16-solid'
+import Plus from '~icons/heroicons/plus-16-solid'
+import Sparkles from '~icons/heroicons/sparkles-16-solid'
 import Trash from '~icons/uil/trash'
 const props = defineProps({
     variables: Object,

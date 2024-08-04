@@ -27,9 +27,15 @@
 
 
             </div>
-            <div @click="modal_open.settings = true" class="flex items-center">
+            <div class="flex gap-2">
+                <div @click="modal_open.settings = true" class="flex items-center gap-2">
 
-                <Cog class="text-gray-500 size-5 cursor-pointer hover:text-gray-400" />
+                    <Cog class="text-gray-500 size-5 cursor-pointer hover:text-gray-400" />
+                </div>
+                <div @click="modal_open.info = true" class="flex items-center gap-2">
+
+                    <Info class="text-amber-500 size-6 cursor-pointer hover:text-amber-400" />
+                </div>
             </div>
         </div>
 
@@ -39,6 +45,7 @@
 <script setup>
 
 import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
+import Info from '~icons/uil/question-circle'
 
 const page = defineModel('page')
 const modal_open = defineModel('modal_open')

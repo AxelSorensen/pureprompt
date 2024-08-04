@@ -12,3 +12,7 @@ body {
     font-family: 'IBM Plex Sans';
     letter-spacing: .05rem;
 }
+
+.contain {
+    container-type: size
+}
