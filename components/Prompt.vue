@@ -22,12 +22,12 @@
                     </div>
                 </div>
             </div>
-            <!-- <button v-if="isValidApiKey"
+            <button v-if="isValidApiKey"
                 class="text-white justify-center flex bg-purple-800 rounded-sm hover:bg-purple-700 text-xs p-2"
-                @click="submit_prompt">SUBMIT</button> -->
+                @click="submit_prompt">SUBMIT</button>
             <div @click="modal_open.settings = true"
                 class="flex gap-2 justify-center whitespace-nowrap rounded-lg px-3.5 py-2.5 text-sm font-medium text-purple-500 hover:bg-purple-900 hover:bg-opacity-40 cursor-pointer shadow border border-purple-500 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(-45deg,transparent_25%,#a855f740_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:animate-[slide_2s_ease-in-out_infinite]"
-                v-if="!isValidApiKey">Add
+                v-else>Add
                 API key in
                 Settings
                 <div class="flex items-center">
@@ -50,6 +50,9 @@
             <div class="flex gap-2 items-center">
                 <div class=" text-neutral-600 text-sm font-medium">VARIABLES</div>
                 <div>
+
+                    <Info class="text-neutral-600 cursor-pointer hover:text-neutral-400 size-4 right-2 bottom-4" />
+
                     <div id="tooltip-default" role="tooltip"
                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         Tooltip content
@@ -68,7 +71,9 @@
             <div class="flex flex-col gap-2 text-neutral-400" v-for="(value, key) in variables">
                 <div class="flex gap-2 text-sm items-center justify-between">
                     <p class="text-purple-500">{{ key }}</p>
-
+                    <!-- <button class="font-bold flex " @click="deleteVariable(key)">
+                        <Trash class="text-gray-500 size-4 hover:text-red-500" />
+                    </button> -->
                 </div>
                 <div class="relative">
                     <textarea
@@ -104,7 +109,7 @@
 
 <script setup>
 
-// import Info from '~icons/heroicons/information-circle-16-solid'
+import Info from '~icons/heroicons/information-circle-16-solid'
 import Exclamation from '~icons/heroicons/exclamation-circle-16-solid'
 import Trash from '~icons/uil/trash'
 import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
@@ -131,24 +136,7 @@ function addVariable(key) {
     variables.value[key] = ''
 }
 
-variables.value = computed(() => {
-    template_prompt.value = prompt.value.split(' ').map(word => {
-        if (word.includes('{{') && word.includes('}}')) {
-            return `<span class="text-purple-500">${word}</span>`
-        } else {
-            return word
-        }
-    }).join(' ')
-    const buffer = {}
-    const regex = /\{\{\w+\}\}/g;
-    const matches = prompt.value.match(regex)
-    if (matches) {
-        matches.forEach(word => {
-            buffer[word] = '';
-        });
-    }
-    return buffer
-});
+
 
 function deleteVariable(key) {
     delete variables.value[key]
@@ -166,9 +154,10 @@ function createVariables() {
 }
 
 
-
-
 function submit_prompt() {
+    Object.keys(variables.value).forEach(key => {
+        delete variables.value[key]
+    })
     template_prompt.value = prompt.value.split(' ').map(word => {
         if (word.includes('{{') && word.includes('}}')) {
             return `<span class="text-purple-500">${word}</span>`
