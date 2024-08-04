@@ -7,7 +7,7 @@
 
         </div>
 
-        <div class="flex bg-neutral-800 rounded-full p-1 relative z-10">
+        <div class="flex bg-neutral-800 rounded-full p-1 relative select-none z-10">
 
             <div @click="page = 'prompt'"
                 :class="{ 'bg-neutral-700 text-neutral-200': page == 'prompt', 'text-neutral-600': page != 'prompt' }"

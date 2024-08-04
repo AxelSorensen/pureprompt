@@ -9,7 +9,7 @@
                 <div class="bg-neutral-800 h-40 w-full p-2 rounded-sm relative">
                     <p class="text-xs text-neutral-400 animate-pulse" v-if="pending.system_prompt">Generating refined
                         prompt...</p>
-                    <textarea @input="submit_prompt" v-else v-model="prompt"
+                    <textarea v-else v-model="prompt"
                         class="bg-transparent outline-none resize-none h-full text-xs w-full caret-white text-neutral-200"
                         placeholder="Instruction for the system">
 
@@ -50,9 +50,6 @@
             <div class="flex gap-2 items-center">
                 <div class=" text-neutral-600 text-sm font-medium">VARIABLES</div>
                 <div>
-
-                    <Info class="text-neutral-600 cursor-pointer hover:text-neutral-400 size-4 right-2 bottom-4" />
-
                     <div id="tooltip-default" role="tooltip"
                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         Tooltip content
@@ -71,10 +68,7 @@
             <div class="flex flex-col gap-2 text-neutral-400" v-for="(value, key) in variables">
                 <div class="flex gap-2 text-sm items-center justify-between">
                     <p class="text-purple-500">{{ key }}</p>
-                    <!-- <button class="font-bold flex "
-                        @click="deleteVariable(key)">
-                        <Trash class="text-gray-500 size-4 hover:text-red-500" />
-                    </button> -->
+
                 </div>
                 <div class="relative">
                     <textarea
@@ -110,7 +104,7 @@
 
 <script setup>
 
-import Info from '~icons/heroicons/information-circle-16-solid'
+// import Info from '~icons/heroicons/information-circle-16-solid'
 import Exclamation from '~icons/heroicons/exclamation-circle-16-solid'
 import Trash from '~icons/uil/trash'
 import Cog from '~icons/heroicons/cog-6-tooth-16-solid'
