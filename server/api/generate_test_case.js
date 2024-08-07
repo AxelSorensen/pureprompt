@@ -8,7 +8,7 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 export default defineEventHandler(async (event) => {
 
     const body = await readBody(event)
-    console.log(body.use_examples)
+
     const instruction = `Given a description and a desired JSON structure, create a JSON object with the main key 'test_cases' and a list of objects with keys corresponding to a given list`;
     const example_instruction = `Given a description and a json object with example entries, create a json object with main key test_cases and entries in json format, using the same keys as the examples and filling with similar but diverse content:`;
     let prompt = null
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const outputParser = new StringOutputParser();
-    console.log(body.format)
+
     const api_key = getCookie(event, 'api_key')
     const model = getCookie(event, 'model')
     try {

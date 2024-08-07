@@ -1,6 +1,6 @@
 <template>
 
-    <div class="bg-neutral-900 flex flex-col p-4 text-xs gap-4">
+    <div class="bg-neutral-900 flex flex-col p-4 text-xs gap-4 rounded-md">
 
         <div class=" text-neutral-600 text-sm font-medium">TEST CASES</div>
         <div ref="test_case_container" class="overflow-scroll rounded-md max-h-[50vh]">
@@ -72,14 +72,14 @@
             </table>
         </div>
 
-        <div class="flex gap-2 justify-between">
-            <div class="flex gap-2">
+        <div class="flex flex-col xs:flex-row gap-2 justify-between ">
+            <div class="flex flex-col xs:flex-row gap-2">
                 <button @click="runPrompts(true)" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
-                    class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
+                    class="bg-neutral-800 whitespace-nowrap flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                     <Play name="heroicons:play-16-solid" class="text-gray-500" />Run All
                 </button>
                 <button @click="runPrompts(false)" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
-                    class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
+                    class="bg-neutral-800 whitespace-nowrap flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                     <Refresh name="heroicons:arrow-path-16-solid" class="text-gray-500" />Run Remaining
                 </button>
 

@@ -82,7 +82,7 @@
 
     </div>
 
-    <div class="bg-neutral-900 flex flex-col p-4 text-xs gap-4">
+    <div class="bg-neutral-900 flex flex-col p-4 text-xs gap-4 rounded-md">
 
         <div class=" text-neutral-600 text-sm font-medium">TEST CASES</div>
         <div ref="test_case_container" class="overflow-scroll rounded-md max-h-[50vh]">
@@ -129,31 +129,31 @@
             </div>
         </div>
 
-        <div class="flex gap-2 justify-between">
-            <div class="flex gap-2">
+        <div class="flex gap-2 sm:flex-row flex-col justify-between">
+            <div class="flex flex-col sm:flex-row gap-2">
                 <button @click="addRow"
-                    class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
+                    class="bg-neutral-800 whitespace-nowrap flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                     <Plus class="text-gray-500 size-3" />Add Row
                 </button>
                 <button @click="openGenerateModal"
-                    class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
+                    class="bg-neutral-800 whitespace-nowrap items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Sparkles class="text-gray-500 size-3" />Generate
                     Test Case
                 </button>
                 <button @click="importJSON"
-                    class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
+                    class="bg-neutral-800 whitespace-nowrap items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Import class="text-gray-500 size-3" />
                     Import
                 </button>
                 <button @click="exportTestCases" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
-                    class="bg-neutral-800 items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
+                    class="bg-neutral-800 whitespace-nowrap items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Export class="text-gray-500 size-3" />
                     Export
                 </button>
             </div>
 
             <button @click="deleteAllRows" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
-                class="bg-neutral-800 group flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
+                class="bg-neutral-800 whitespace-nowrap group flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                 <Trash class="text-gray-500 group-hover:text-red-500 size-3" />Clear All
             </button>
         </div>

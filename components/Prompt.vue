@@ -26,12 +26,15 @@
                 class="text-white justify-center flex bg-purple-800 rounded-sm hover:bg-purple-700 text-xs p-2"
                 @click="submit_prompt">SUBMIT</button>
             <div @click="modal_open.settings = true"
-                class="flex gap-2 justify-center whitespace-nowrap rounded-lg px-3.5 py-2.5 text-sm font-medium text-purple-500 hover:bg-purple-900 hover:bg-opacity-40 cursor-pointer shadow border border-purple-500 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(-45deg,transparent_25%,#a855f740_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:animate-[slide_2s_ease-in-out_infinite]"
-                v-else>Add
-                API key in
-                Settings
+                class="flex text-center gap-2 justify-center whitespace-nowrap rounded-lg px-3.5 py-2.5 text-sm font-medium text-purple-500 hover:bg-purple-900 hover:bg-opacity-40 cursor-pointer shadow border border-purple-500 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(-45deg,transparent_25%,#a855f740_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:animate-[slide_2s_ease-in-out_infinite]"
+                v-else>
+                <div class="truncate">
+                    Add
+                    API key in
+                    Settings
+                </div>
                 <div class="flex items-center">
-                    <Cog class="text-purple-500 size-4" />
+                    <Cog class="text-purple-500 min-w-0  size-4" />
                 </div>
             </div>
             <div class="flex flex-col gap-2 overflow-hidden">
@@ -47,26 +50,17 @@
         </div>
 
         <div class="bg-neutral-900 rounded-md p-4 flex flex-col gap-4">
-            <div class="flex gap-2 items-center">
+            <div class="flex flex-col gap-2">
                 <div class=" text-neutral-600 text-sm font-medium">VARIABLES</div>
-                <div>
+                <div v-if="!Object.keys(variables).length" class="flex items-center gap-2">
 
-                    <Info class="text-neutral-600 cursor-pointer hover:text-neutral-400 size-4 right-2 bottom-4" />
-
-                    <div id="tooltip-default" role="tooltip"
-                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        Tooltip content
-                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    <div>
+                        <Exclamation class="text-amber-500 size-4 right-2 bottom-4" />
                     </div>
+                    <div class="text-xs text-amber-500">Currently no placeholder variables in prompt</div>
                 </div>
             </div>
-            <div v-if="!Object.keys(variables).length" class="flex items-center gap-2">
 
-                <div>
-                    <Exclamation class="text-amber-500 size-4 right-2 bottom-4" />
-                </div>
-                <div class="text-xs text-amber-500">Currently no placeholder variables in prompt</div>
-            </div>
 
             <div class="flex flex-col gap-2 text-neutral-400" v-for="(value, key) in variables">
                 <div class="flex gap-2 text-sm items-center justify-between">
@@ -102,6 +96,9 @@
             <div v-else class="text-neutral-400 text-xs">{{ response }}</div>
 
         </div>
+
+
+
 
 
     </div>

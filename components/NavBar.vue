@@ -1,8 +1,9 @@
 <template>
 
-    <div class="col-span-2 relative text-xs bg-neutral-900 rounded-md p-4 flex items-center justify-center">
+    <div
+        class="col-span-2 relative text-xs bg-neutral-900  rounded-md p-4 flex items-center sm:justify-center justify-start ">
         <div class="flex absolute items-center gap-4 left-0 p-4">
-            <div class="text-purple-500 text-sm">@PurePrompt</div>
+            <div class="text-purple-500 hidden sm:block text-sm">@PurePrompt</div>
             <div class="text-xs hidden md:block text-neutral-600">By Axel Sorensen</div>
 
         </div>
@@ -21,9 +22,10 @@
         </div>
         <div class="flex gap-4 absolute right-0 p-4">
             <div class="text-xs items-center text-neutral-600 flex gap-2">
-                <p class="text-neutral-400 hidden md:block">Current model:</p>
+                <p class="text-neutral-400 hidden lg:block">Current model:</p>
 
-                <div class="bg-purple-900 text-purple-400 px-2 p-[2px] rounded-full"> {{ model || 'Loading...' }}</div>
+                <div class="bg-purple-900 text-purple-400 hidden xs:block px-2 p-[2px] rounded-full"> {{ model ||
+                    'Loading...' }}</div>
 
 
             </div>
