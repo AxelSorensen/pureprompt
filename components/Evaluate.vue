@@ -10,11 +10,11 @@
                         <th class="w-10 text-neutral-400">#</th>
                         <th v-for="variable in Object.keys(variables)" class="font-normal whitespace-nowrap">
                             <div class="flex justify-between gap-2 items-center text-purple-500 p-4">
-                                <p class="">{{ variable }}</p>
+                                <p class="truncate">{{ variable }}</p>
 
                             </div>
                         </th>
-                        <th class="text-neutral-400 font-normal">Model Response</th>
+                        <th class="text-neutral-400 truncate p-2 font-normal">Model Response</th>
                         <th class="w-24 text-neutral-400 p-4">
                             <div class="flex justify-center items-center gap-2">
                                 <div>{{ average_score || '-' }}</div>
@@ -37,7 +37,8 @@
                         class="p-2 text-left align-text-top text-xs text-neutral-200 max-w-20">
 
                         <div :placeholder="`Write a ${variable}`"
-                            class="w-full top-0 bg-transparent outline-none block p-2">{{ test_cases[key][variable]
+                            class="w-full top-0 bg-transparent outline-none block p-2 text-ellipsis truncate">{{
+                                test_cases[key][variable]
                             }}</div>
 
 
@@ -47,7 +48,7 @@
                         <div v-if="responses?.[key]?.pending" class="animate-pulse text-neutral-400">Generating
                             response...
                         </div>
-                        <div v-else>{{ responses?.[key]?.data?.response }}</div>
+                        <div class="" v-else>{{ responses?.[key]?.data?.response }}</div>
 
                     </td>
                     <td>

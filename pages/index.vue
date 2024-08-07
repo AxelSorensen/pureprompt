@@ -1,8 +1,8 @@
 <template>
     <div v-if="modal_open.info" @mousedown.self="modal_open.settings = false, modal_open.info = false"
-        class="fixed z-30 w-screen h-screen  bg-black bg-opacity-70 flex justify-center items-center">
+        class="fixed z-30 w-screen h-dvh  bg-black bg-opacity-70 flex justify-center items-center">
         <div
-            class="bg-neutral-900 w-1/2 h-fit max-w-[400px] min-w-[200px] gap-8 flex flex-col justify-between rounded-md p-4">
+            class="bg-neutral-900 w-4/5 h-fit max-w-[400px] min-w-[200px] gap-8 flex flex-col justify-between rounded-md p-4">
 
             <div class="flex gap-4 flex-col h-full text-xs text-neutral-400">
                 <div class=" text-neutral-600 text-sm font-medium">INFO</div>
@@ -91,9 +91,9 @@
 
     </div>
     <div v-if="modal_open.settings" @mousedown.self="modal_open.settings = false"
-        class="fixed z-30 w-screen h-screen  bg-black bg-opacity-70 flex justify-center items-center">
+        class="fixed z-30 w-screen h-dvh bg-black bg-opacity-70 flex justify-center items-center">
         <div
-            class="bg-neutral-900 w-1/2 h-fit max-w-[400px] min-w-[200px] gap-8 flex flex-col justify-between rounded-md p-4">
+            class="bg-neutral-900 w-4/5 h-fit max-w-[400px] min-w-[200px] gap-8 flex flex-col justify-between rounded-md p-4">
 
             <div class="flex gap-4 flex-col h-full">
                 <div class=" text-neutral-600 text-sm font-medium pb-4">SETTINGS</div>
@@ -136,7 +136,7 @@
 
     </div>
 
-    <div class=" bg-neutral-800 w-screen absolute h-screen grid grid-rows-[50px,1fr] grid-cols-1 p-4 gap-y-4">
+    <div class=" bg-neutral-800 w-screen absolute h-dvh grid grid-rows-[auto,1fr] grid-cols-1 p-4 gap-y-4">
 
         <NavBar v-model:page="page" v-model:modal_open="modal_open" />
         <KeepAlive>

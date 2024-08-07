@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-[2fr,1fr] gap-4">
+    <div class="grid grid-cols-[2fr_minmax(150px,_1fr)] gap-4">
 
         <div class="bg-neutral-900 rounded-md p-4 h-full flex flex-col gap-4 contain">
 
@@ -16,7 +16,8 @@
                 </textarea>
                     <div class="absolute flex items-center cursor-pointer group gap-2  right-2 bottom-4"
                         @click="refine_prompt">
-                        <p v-if="!prompt" class="text-xs text-gray-500 group-hover:text-purple-500">Generate
+                        <p v-if="!prompt" class="text-xs hidden sm:block text-gray-500 group-hover:text-purple-500">
+                            Generate
                             example</p>
                         <Sparkles class="text-gray-500 size-4 group-hover:text-purple-500 cursor-pointer" />
                     </div>
@@ -40,8 +41,7 @@
             <div class="flex flex-col gap-2 overflow-hidden">
                 <div class=" text-neutral-600 text-sm font-medium">TEMPLATE</div>
                 <div class=" overflow-scroll">
-                    <div v-html="template_prompt"
-                        class=" resize-none whitespace-pre rounded-sm outline-none text-xs caret-white text-neutral-400">
+                    <div v-html="template_prompt" class="rounded-sm text-xs text-neutral-400">
                     </div>
                 </div>
 
@@ -52,7 +52,7 @@
         <div class="bg-neutral-900 rounded-md p-4 flex flex-col gap-4">
             <div class="flex flex-col gap-2">
                 <div class=" text-neutral-600 text-sm font-medium">VARIABLES</div>
-                <div v-if="!Object.keys(variables).length" class="flex items-center gap-2">
+                <div v-if="!Object.keys(variables).length" class="flex items-center gap-2 py-2">
 
                     <div>
                         <Exclamation class="text-amber-500 size-4 right-2 bottom-4" />
@@ -64,7 +64,7 @@
 
             <div class="flex flex-col gap-2 text-neutral-400" v-for="(value, key) in variables">
                 <div class="flex gap-2 text-sm items-center justify-between">
-                    <p class="text-purple-500">{{ key }}</p>
+                    <p class="text-purple-500">{{ '&#123;&#123;' + key + '&#125;&#125;' }}</p>
                     <!-- <button class="font-bold flex " @click="deleteVariable(key)">
                         <Trash class="text-gray-500 size-4 hover:text-red-500" />
                     </button> -->
@@ -88,7 +88,9 @@
             </button>
             <div class=" text-neutral-600 text-sm font-medium">RESPONSE</div>
             <div v-if="pending.model_response" class="flex gap-4 items-center">
-                <div class="w-2 h-2 bg-neutral-400 rounded-full animate-ping"></div>
+                <div>
+                    <div class="w-2 h-2 bg-neutral-400 rounded-full animate-ping"></div>
+                </div>
                 <p class="text-xs  text-neutral-400 animate-pulse">
                     Generating
                     test cases...</p>
@@ -144,7 +146,7 @@ function createVariables() {
     const matches = prompt.value.match(regex)
     if (matches) {
         matches.forEach(word => {
-            variables.value[word] = '';
+            variables.value[word.slice(2, -2)] = '';
         });
     }
 

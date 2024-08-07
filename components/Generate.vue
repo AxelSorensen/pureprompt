@@ -1,7 +1,7 @@
 <template>
 
     <div v-if="modal_open.generate" @mousedown.self="modal_open.generate = false"
-        class="fixed z-30 w-screen h-screen  bg-black bg-opacity-70 flex justify-center items-center">
+        class="fixed z-30 w-screen h-dvh  bg-black bg-opacity-70 flex justify-center items-center">
         <div
             class="bg-neutral-900 w-1/2 h-1/2 max-w-[400px] min-h-[400px] flex flex-col justify-between rounded-md p-4">
             <div class="flex gap-4 flex-col">
@@ -89,7 +89,15 @@
             <table class="bg-neutral-800 w-full table-fixed rounded-md text-center  divide-y divide-neutral-700">
                 <thead class="sticky top-0 bg-neutral-800 z-10">
                     <tr class="text-center  text-purple-500 divide-x divide-neutral-700">
-                        <th class="w-10 text-neutral-400">#</th>
+                        <th class="w-10 text-neutral-400 p-4">#</th>
+                        <th v-if="!Object.keys(variables).length"
+                            class="w-full flex gap-2 text-amber-500 justify-center font-normal p-4">
+                            <div>
+                                <Exclamation class="text-amber-500 size-4 right-2 bottom-4" />
+                            </div>
+                            <div class="text-xs truncate text-amber-500">No variables added to prompt
+                            </div>
+                        </th>
                         <th v-for="variable in Object.keys(variables)" class="font-normal whitespace-nowrap">
                             <div class="flex justify-between gap-2 items-center p-4">
                                 <p class="">{{ variable }}</p>
@@ -102,16 +110,22 @@
                 </thead>
 
 
-                <tr v-for="(item, key) in test_cases" class="divide-x divide-y divide-neutral-700">
+                <tr v-for="(item, key) in test_cases" class="divide-x divide-y divide-neutral-700" ref="textRefs">
                     <td class="text-neutral-400 p-2">{{ key }}</td>
-                    <td v-for="variable in Object.keys(item)"
+                    <td v-for="(variable, index) in Object.keys(item)"
                         class="p-2 text-left align-text-top text-xs text-neutral-200 max-w-20">
 
-                        <input :placeholder="`Write a ${variable}`" v-model="test_cases[key][variable]"
-                            class="w-full top-0 bg-transparent outline-none block p-2" />
+                        <textarea @blur="resize(key, index)" @input="resize(key, index)" v-show="selected_input == key"
+                            :placeholder="`Write a '${variable}'`" v-model="test_cases[key][variable]" :ref="key"
+                            class="w-full resize-none h-8  top-0 bg-transparent outline-none block p-2"></textarea>
 
+                        <input v-show="selected_input != key" @focus="selected_input = key; nextTick(() => {
+                            $refs[key.toString()][0].focus();
+                        })" :placeholder="`Write a '${variable}'`" v-model="test_cases[key][variable]"
+                            class="w-full resize-none top-0 bg-transparent truncate outline-none block p-2" />
 
                     </td>
+
                     <td>
                         <div class="flex justify-center p-2" @click="deleteRow(key)">
                             <Trash class="text-gray-500 cursor-pointer size-4 hover:text-red-500" />
@@ -129,13 +143,20 @@
             </div>
         </div>
 
+
+        <!-- <div v-for="key in [1, 2, 3]">
+            <div @click="$refs[key.toString()][0].focus()">Hello</div>
+            <input type=" text" :ref="key" name="" id="">
+        </div> -->
+
         <div class="flex gap-2 sm:flex-row flex-col justify-between">
             <div class="flex flex-col sm:flex-row gap-2">
-                <button @click="addRow"
+                <button @click="addRow" :class="{ 'opacity-40 pointer-events-none': !Object.keys(variables).length }"
                     class="bg-neutral-800 whitespace-nowrap flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
                     <Plus class="text-gray-500 size-3" />Add Row
                 </button>
                 <button @click="openGenerateModal"
+                    :class="{ 'opacity-40 pointer-events-none': !Object.keys(variables).length }"
                     class="bg-neutral-800 whitespace-nowrap items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Sparkles class="text-gray-500 size-3" />Generate
                     Test Case
@@ -189,7 +210,13 @@ const pending = ref({
     refine_prompt: false
 })
 
+const textRefs = ref([])
 
+function resize(key, index) {
+
+    textRefs.value[key].children[index + 1].children[0].style.height = textRefs.value[key].children[index + 1].children[0].scrollHeight + 'px';
+}
+const selected_input = ref(null)
 
 async function refine_prompt() {
     pending.value.refine_prompt = true
@@ -203,6 +230,8 @@ async function refine_prompt() {
 
 
 }
+
+
 
 async function download(content, fileName, contentType) {
     var a = document.createElement("a");
@@ -221,6 +250,7 @@ function addRow() {
 
     nextTick(() => {
         test_case_container.value.scrollTop = test_case_container.value.scrollHeight
+        textRefs.value[Object.keys(test_cases.value).length - 1].children[1].children[1].focus()
     });
 }
 
@@ -242,9 +272,10 @@ function importJSON() {
     });
 }
 
-function deleteRow(index) {
-    test_cases.value.splice(index, 1)
-    responses.value.splice(index, 1)
+function deleteRow(key) {
+    test_cases.value.splice(key, 1)
+    responses.value.splice(key, 1)
+    textRefs.value[key].children[1].children[0].style.height = '32px';
 }
 
 function deleteAllRows() {
