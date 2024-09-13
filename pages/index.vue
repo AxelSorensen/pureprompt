@@ -348,7 +348,7 @@ if (!api_key.value) {
 
 const provider = useCookie('provider')
 if (!provider.value) {
-    provider.value = 'OpenAI'
+    provider.value = 'openai'
 }
 
 const model = useCookie('model')
