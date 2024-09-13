@@ -26,7 +26,7 @@
                 <p class="text-neutral-400 truncate lg:block">Current model:</p>
 
                 <div class="bg-purple-900 truncate text-purple-400 px-2 p-[2px] rounded-full"> {{
-                    model[provider] ||
+                    model?.[provider] ||
                     'Loading...' }}</div>
 
 
