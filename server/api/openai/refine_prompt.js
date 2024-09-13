@@ -26,9 +26,9 @@ export default defineEventHandler(async (event) => {
     const outputParser = new StringOutputParser();
     try {
 
-        const api_key = JSON.parse(getCookie(event, 'api_key')).openai
-        const parameters = JSON.parse(getCookie(event, 'parameters')).openai
-        const model = JSON.parse(getCookie(event, 'model')).openai
+        const api_key = JSON.parse(getCookie(event, 'api_key'))?.openai
+        const parameters = JSON.parse(getCookie(event, 'parameters'))?.openai
+        const model = JSON.parse(getCookie(event, 'model'))?.openai
         // const { api_key, model } = $fetch('api/getCookies')
         const chatModel = new ChatOpenAI({
             apiKey: api_key,

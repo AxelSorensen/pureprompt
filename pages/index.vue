@@ -420,13 +420,13 @@ const endpoints = [
 const isValidApiKey = computed(() => {
     if (provider.value == 'openai') {
         const apiKeyRegex = /^sk-proj-[A-Za-z0-9]{48}$/;
-        return apiKeyRegex.test(api_key.value.openai);
+        return apiKeyRegex.test(api_key.value?.openai);
     } else if (provider.value == 'anthropic') {
         const apiKeyRegex = /^sk-ant-[A-Za-z0-9_-]{101}$/;
-        return apiKeyRegex.test(api_key.value.anthropic);
+        return apiKeyRegex.test(api_key.value?.anthropic);
     } else if (provider.value == 'huggingface') {
         const apiKeyRegex = /^hf_[A-Za-z0-9]{34}$/;
-        return apiKeyRegex.test(api_key.value.huggingface);
+        return apiKeyRegex.test(api_key.value?.huggingface);
     }
 })
 
