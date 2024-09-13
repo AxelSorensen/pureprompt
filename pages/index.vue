@@ -370,7 +370,6 @@ if (!parameters.value) {
     parameters.value = { openai: { max_tokens: 100, temp: .7 }, anthropic: { max_tokens: 100, temp: .7 }, huggingface: { max_tokens: 100, temp: .7 } }
 }
 
-const endpoint_type = ref(false)
 
 
 // const updateCookie = async ($event, key) => {
@@ -382,7 +381,7 @@ const endpoint_type = ref(false)
 //         }
 //     })
 // }
-const hf_search_results = ref(null)
+// const hf_search_results = ref(null)
 
 const endpoints = [
     { name: 'gpt-2 (raw)', url: 'https://api-inference.huggingface.co/models/openai-community/gpt2', type: 'raw' },
