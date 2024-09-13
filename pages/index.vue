@@ -353,7 +353,7 @@ if (!provider.value) {
 
 const model = useCookie('model')
 if (!model.value) {
-    model.value = { openai: 'gpt-4o-mini', anthropic: 'claude-3-opus', huggingface: 'gpt-2 (raw)' }
+    model.value = { openai: 'gpt-4o-mini', anthropic: 'claude-3-opus-20240229', huggingface: 'gpt-2 (raw)' }
 }
 
 const endpoint = useCookie('endpoint')
