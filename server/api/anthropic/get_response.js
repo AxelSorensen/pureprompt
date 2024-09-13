@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatAnthropic } from "@langchain/anthropic";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 
@@ -9,15 +9,17 @@ const prompt = ChatPromptTemplate.fromMessages([
 const outputParser = new StringOutputParser();
 
 export default defineEventHandler(async (event) => {
-    const api_key = getCookie(event, 'api_key')
-    const model = getCookie(event, 'model')
+    const api_key = JSON.parse(getCookie(event, 'api_key')).anthropic
+    const parameters = JSON.parse(getCookie(event, 'parameters')).anthropic
+    const model = JSON.parse(getCookie(event, 'model')).anthropic
     const body = await readBody(event)
+
     try {
-
-
-        const chatModel = new ChatOpenAI({
+        const chatModel = new ChatAnthropic({
             apiKey: api_key,
             model: model,
+            temperature: parameters.temp,
+            maxTokens: parameters.max_tokens
         });
 
 

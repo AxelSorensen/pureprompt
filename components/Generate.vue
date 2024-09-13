@@ -1,5 +1,4 @@
 <template>
-
     <div v-if="modal_open.generate" @mousedown.self="modal_open.generate = false"
         class="fixed z-30 w-screen h-dvh  bg-black bg-opacity-70 flex justify-center items-center">
         <div
@@ -11,15 +10,19 @@
                         prompt...</p>
                     <textarea v-else v-model="test_case_description"
                         class="bg-transparent outline-none resize-none h-full text-xs w-full caret-white text-neutral-200"
-                        placeholder="Decribe the test cases">
+                        placeholder="Describe the desired inputs. (Eg. 'Fill source and target with different languages')">
 
                 </textarea>
 
 
-                    <div v-if="test_case_description" @click="refine_prompt">
-                        <Sparkles
+                    <!-- <div v-if="test_case_description">
+                        <div v-if="pending.refine_prompt"
+                            class="text-xs w-fit hover:text-red-500 absolute right-2 bottom-2 select-none cursor-pointer rounded-sm text-neutral-600"
+                            @click="abort('refine_prompt')">
+                            Cancel</div>
+                        <Sparkles v-else @click="refine_prompt"
                             class="text-gray-500 absolute hover:text-purple-500 cursor-pointer size-4 right-2 bottom-4" />
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="flex justify-between items-center">
@@ -53,7 +56,8 @@
                         <Exclamation class="text-amber-500 size-4 right-2 bottom-4" />
 
 
-                        <div class=" text-amber-500  text-xs font-medium" v-if="!test_cases.length">Add examples
+                        <div class=" text-amber-500  text-xs font-medium truncate" v-if="!test_cases.length">Add
+                            examples
                         </div>
                     </div>
                     <input v-else v-model="use_examples"
@@ -82,7 +86,7 @@
 
     </div>
 
-    <div class="bg-neutral-900 flex flex-col p-4 text-xs gap-4 rounded-md">
+    <div class="bg-neutral-900 contain flex flex-col p-4 text-xs gap-4 rounded-md">
 
         <div class=" text-neutral-600 text-sm font-medium">TEST CASES</div>
         <div ref="test_case_container" class="overflow-scroll rounded-md max-h-[50vh]">
@@ -100,7 +104,7 @@
                         </th>
                         <th v-for="variable in Object.keys(variables)" class="font-normal whitespace-nowrap">
                             <div class="flex justify-between gap-2 items-center p-4">
-                                <p class="">{{ variable }}</p>
+                                <p class="truncate">{{ variable }}</p>
 
                             </div>
                         </th>
@@ -113,7 +117,7 @@
                 <tr v-for="(item, key) in test_cases" class="divide-x divide-y divide-neutral-700" ref="textRefs">
                     <td class="text-neutral-400 p-2">{{ key }}</td>
                     <td v-for="(variable, index) in Object.keys(item)"
-                        class="p-2 text-left align-text-top text-xs text-neutral-200 max-w-20">
+                        class="p-2 text-left align-text-top text-xs  text-neutral-200 max-w-20">
 
                         <textarea @blur="resize(key, index)" @input="resize(key, index)" v-show="selected_input == key"
                             :placeholder="`Write a '${variable}'`" v-model="test_cases[key][variable]" :ref="key"
@@ -122,7 +126,7 @@
                         <input v-show="selected_input != key" @focus="selected_input = key; nextTick(() => {
                             $refs[key.toString()][0].focus();
                         })" :placeholder="`Write a '${variable}'`" v-model="test_cases[key][variable]"
-                            class="w-full resize-none top-0 bg-transparent truncate outline-none block p-2" />
+                            class="w-full resize-none truncate top-0 bg-transparent outline-none block p-2" />
 
                     </td>
 
@@ -140,7 +144,13 @@
                 <p class="text-xs  text-neutral-400 animate-pulse">
                     Generating
                     test cases...</p>
+
+                <div class="text-xs w-fit hover:text-red-500 right-2 bottom-2 select-none cursor-pointer rounded-sm text-neutral-600"
+                    @click="abort('generate_prompts')">
+                    Cancel</div>
             </div>
+            <div v-if="error" class="pt-4 text-red-500"> {{ error }}</div>
+
         </div>
 
 
@@ -153,23 +163,24 @@
             <div class="flex flex-col sm:flex-row gap-2">
                 <button @click="addRow" :class="{ 'opacity-40 pointer-events-none': !Object.keys(variables).length }"
                     class="bg-neutral-800 whitespace-nowrap flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                    <Plus class="text-gray-500 size-3" />Add Row
+                    <Plus class="text-gray-500 size-3" />
+                    <p class="truncate">Add Row</p>
                 </button>
                 <button @click="openGenerateModal"
                     :class="{ 'opacity-40 pointer-events-none': !Object.keys(variables).length }"
                     class="bg-neutral-800 whitespace-nowrap items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
-                    <Sparkles class="text-gray-500 size-3" />Generate
-                    Test Case
+                    <Sparkles class="text-gray-500 size-3" />
+                    <p class="truncate">Generate Test Cases</p>
                 </button>
                 <button @click="importJSON"
                     class="bg-neutral-800 whitespace-nowrap items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Import class="text-gray-500 size-3" />
-                    Import
+                    <p class="truncate">Import</p>
                 </button>
                 <button @click="exportTestCases" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
                     class="bg-neutral-800 whitespace-nowrap items-center hover:bg-neutral-700 flex gap-2 text-neutral-400 p-2 rounded-md">
                     <Export class="text-gray-500 size-3" />
-                    Export
+                    <p class="truncate">Export</p>
                 </button>
             </div>
 
@@ -200,7 +211,7 @@ const responses = defineModel('responses')
 const modal_open = defineModel('modal_open')
 const test_case_description = ref('')
 const use_examples = ref(false)
-
+const provider = useCookie('provider')
 const test_cases = defineModel('test_cases')
 const num_cases = ref(1)
 const tokens_per_case = ref(10)
@@ -210,20 +221,41 @@ const pending = ref({
     refine_prompt: false
 })
 
+const error = ref(null)
+
+function abort(id) {
+    if (id == 'refine_prompt') {
+        refine_prompt_controller.abort()
+        pending.value.refine_prompt = false
+    }
+    if (id == 'generate_prompts') {
+        generate_test_case_controller.abort()
+        pending.value.generate_prompts = false
+    }
+
+
+}
+
 const textRefs = ref([])
 
 function resize(key, index) {
-
+    textRefs.value[key].children[index + 1].children[0].style.height = '1rem'
     textRefs.value[key].children[index + 1].children[0].style.height = textRefs.value[key].children[index + 1].children[0].scrollHeight + 'px';
 }
 const selected_input = ref(null)
 
+let refine_prompt_controller;
+let generate_test_case_controller
+
 async function refine_prompt() {
+    refine_prompt_controller = new AbortController();
     pending.value.refine_prompt = true
-    test_case_description.value = await $fetch('/api/refine_prompt', {
+    test_case_description.value = await $fetch(`/api/${provider.value}/refine_prompt`, {
+        signal: refine_prompt_controller.signal,
         method: 'POST',
         body: {
             "prompt": test_case_description.value,
+            "with_variables": false
         }
     })
     pending.value.refine_prompt = false
@@ -291,9 +323,13 @@ function exportTestCases() {
 }
 
 async function generate_test_case() {
+    error.value = null
+    generate_test_case_controller = new AbortController();
     pending.value.generate_prompts = true
     modal_open.value.generate = false
-    let buffer = await $fetch('/api/generate_test_case', {
+
+    let buffer = await $fetch(`/api/${provider.value}/generate_test_case`, {
+        signal: generate_test_case_controller.signal,
         method: 'POST',
         body: {
             "description": test_case_description.value,
@@ -305,7 +341,14 @@ async function generate_test_case() {
         }
     })
     pending.value.generate_prompts = false
-    buffer = JSON.parse(buffer)
+    try {
+        buffer = buffer.replace('```json', '')
+        buffer = buffer.replace('```', '')
+        buffer = JSON.parse(buffer)
+    } catch (e) {
+        error.value = 'Model did not generate valid json. Increase max_tokens in settings or use a better model for more reliable results'
+        return
+    }
     Object.values(buffer['test_cases']).forEach(test_case => {
         test_cases.value.push(test_case)
     })

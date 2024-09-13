@@ -31,14 +31,15 @@ export default defineEventHandler(async (event) => {
 
     const outputParser = new StringOutputParser();
 
-    const api_key = getCookie(event, 'api_key')
-    const model = getCookie(event, 'model')
+    const api_key = JSON.parse(getCookie(event, 'api_key')).openai
+    const parameters = JSON.parse(getCookie(event, 'parameters')).openai
+    const model = JSON.parse(getCookie(event, 'model')).openai
     try {
-
-
         const chatModel = new ChatOpenAI({
             apiKey: api_key,
             model: model,
+            temperature: parameters.temp,
+            maxTokens: parameters.max_tokens,
             modelKwargs: {
                 "response_format": {
                     type: "json_object"

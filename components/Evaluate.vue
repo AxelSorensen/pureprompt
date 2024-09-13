@@ -1,6 +1,6 @@
 <template>
 
-    <div class="bg-neutral-900 flex flex-col p-4 text-xs gap-4 rounded-md">
+    <div class="bg-neutral-900 flex flex-col p-4 contain text-xs gap-4 rounded-md">
 
         <div class=" text-neutral-600 text-sm font-medium">TEST CASES</div>
         <div ref="test_case_container" class="overflow-scroll rounded-md max-h-[50vh]">
@@ -37,7 +37,7 @@
                         class="p-2 text-left align-text-top text-xs text-neutral-200 max-w-20">
 
                         <div :placeholder="`Write a ${variable}`"
-                            class="w-full top-0 bg-transparent outline-none block p-2 text-ellipsis truncate">{{
+                            class="w-full top-0 bg-transparent outline-none block p-2">{{
                                 test_cases[key][variable]
                             }}</div>
 
@@ -47,7 +47,9 @@
                     <td class="p-4 text-left text-neutral-200">
                         <div v-if="responses?.[key]?.pending" class="animate-pulse text-neutral-400">Generating
                             response...
+
                         </div>
+
                         <div class="" v-else>{{ responses?.[key]?.data?.response }}</div>
 
                     </td>
@@ -72,25 +74,43 @@
 
             </table>
         </div>
-
+        <div v-if="pending" class="p-2 flex gap-4 items-center justify-center">
+            <div class="w-2 h-2 bg-neutral-400 rounded-full animate-ping"></div>
+            <p class="text-xs  text-neutral-400 animate-pulse">
+                Generating
+                test cases...</p>
+            <div class="text-xs w-fit hover:text-red-500 right-2 bottom-2 select-none cursor-pointer rounded-sm text-neutral-600"
+                @click="abort">
+                Cancel</div>
+        </div>
         <div class="flex flex-col xs:flex-row gap-2 justify-between ">
             <div class="flex flex-col xs:flex-row gap-2">
                 <button @click="runPrompts(true)" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
                     class="bg-neutral-800 whitespace-nowrap flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                    <Play name="heroicons:play-16-solid" class="text-gray-500" />Run All
+                    <Play name="heroicons:play-16-solid" class="text-gray-500" />
+                    <p class="truncate">Run All</p>
                 </button>
+
                 <button @click="runPrompts(false)" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
                     class="bg-neutral-800 whitespace-nowrap flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                    <Refresh name="heroicons:arrow-path-16-solid" class="text-gray-500" />Run Remaining
+                    <Refresh name="heroicons:arrow-path-16-solid" class="text-gray-500" />
+                    <p class="truncate">Run Remaining</p>
+                </button>
+                <button @click="deleteAllResponses" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
+                    class="bg-neutral-800 whitespace-nowrap group flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
+                    <Trash class="text-gray-500 group-hover:text-red-500 size-3" />
+                    <p class="truncate">Clear All</p>
                 </button>
 
 
             </div>
             <button @click="exportEval" :class="{ 'opacity-40 pointer-events-none': !test_cases.length }"
                 class="bg-neutral-800 flex hover:bg-neutral-700 items-center gap-2 text-neutral-400 p-2 rounded-md">
-                <Export name="heroicons:document-arrow-down-16-solid" class="text-gray-500" />Export Eval
+                <Export name="heroicons:document-arrow-down-16-solid" class="text-gray-500" />
+                <p class="truncate">Export Eval</p>
             </button>
         </div>
+
 
     </div>
 
@@ -103,6 +123,7 @@ import Refresh from '~icons/heroicons/arrow-path-16-solid'
 import Export from '~icons/heroicons/arrow-down-tray-16-solid'
 import Play from '~icons/heroicons/play-16-solid'
 import Trash from '~icons/uil/trash'
+import XMark from '~icons/heroicons/x-mark-16-solid'
 
 const props = defineProps({
     variables: Object,
@@ -124,8 +145,13 @@ const average_score = computed(() => {
 const modal_open = defineModel('modal_open')
 
 function exportEval() {
-    let file = responses.value.map(response => {
-        return response.data
+
+    let file = responses.value.map((response, idx) => {
+        let replaced_prompt
+        Object.keys(variables.value).forEach(variable => {
+            replaced_prompt = prompt.value.replace('{{' + variable + '}}', test_cases.value[idx][variable])
+        })
+        return { input: replaced_prompt, ...response.data };
     })
     download(JSON.stringify(file), 'evals', 'application/json')
 }
@@ -139,9 +165,22 @@ async function download(content, fileName, contentType) {
 }
 
 
+function deleteAllResponses() {
+    responses.value = []
+}
+
+const pending = ref(false)
+
+const provider = useCookie('provider')
+
+let run_prompt_controllers = []  // Store all AbortController instances
+
 async function runPrompts(all) {
     let ids = []
     let promises = []
+    pending.value = true
+    run_prompt_controllers = [] // Reset the controller array before each run
+
     test_cases.value.forEach((test_case, index) => {
         let replaced_prompt = prompt.value
 
@@ -150,26 +189,45 @@ async function runPrompts(all) {
             ids.push(index)
             Object.keys(variables.value).forEach(variable => {
                 replaced_prompt = replaced_prompt.replace(variable, test_case[variable])
-
             })
-            promises.push($fetch('/api/get_response', {
+
+            let controller = new AbortController();  // Create a new controller for each request
+            run_prompt_controllers.push(controller);  // Store the controller
+
+            promises.push($fetch(`/api/${provider.value}/get_response`, {
+                signal: controller.signal,  // Pass the controller's signal
                 method: 'POST',
                 body: {
                     "prompt": replaced_prompt,
                 }
             }))
         }
-
     })
+
     Promise.all(promises).then(results => {
         results.forEach((response, index) => {
             responses.value[ids[index]].data.response = response
             responses.value[ids[index]].pending = false
         });
-        // Do something with the responses (arrOfRes[x] = response)
+        pending.value = false  // Reset pending state after all promises resolve
+    }).catch(error => {
+        if (error.name === 'AbortError') {
+            console.log('Fetch aborted');
+        } else {
+            console.error('Error:', error);
+        }
+        pending.value = false  // Reset pending state even if aborted or errored
     })
+}
 
-
+function abort() {
+    run_prompt_controllers.forEach(controller => {
+        controller.abort();  // Abort all requests in the controller array
+    });
+    responses.value.forEach(response => {
+        response.pending = false
+    })
+    pending.value = false
 
 }
 
