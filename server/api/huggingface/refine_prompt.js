@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     const endpoint = inference.endpoint(custom_endpoint.url)
 
     const final_instruction = body.with_variables ? variable_instruction : instruction
-    final_prompt = final_instruction + '\n\n' + body.prompt
+    const final_prompt = final_instruction + '\n\n' + body.prompt
 
     try {
         if (custom_endpoint.type == 'chat') {
