@@ -36,3 +36,5 @@ Then open [http://localhost:3000](http://localhost:3000). A hosted version also 
 ## Status
 
 🚧 Inactive prototype — last touched in 2024; functional core (prompt/generate/evaluate flow) but not under active development.
+
+✅ Runs cleanly — `npm install && npm run build` verified working as of 2026-09-03 (npm reports many high/critical audit warnings from old transitive deps, but install/build succeed). The `/api/anthropic`, `/api/openai`, and `/api/huggingface` routes require your own provider API keys; not exercised against live keys.
