@@ -2,6 +2,8 @@
 
 A tool for testing prompt robustness by auto-generating test cases and evaluating a prompt's responses across models.
 
+![PurePrompt screenshot](docs/screenshot.png)
+
 ## Features
 
 - 📝 **Prompt templates** — write prompts with `{{variable}}` placeholders, auto-recognized and highlighted in the editor
